@@ -21,6 +21,14 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
+# Check for .env file and provide helpful error message
+env_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+if not os.path.exists(env_file_path):
+    print("\n⚠️  WARNING: No .env file found!")
+    print("📝 Please copy .env.example to .env and configure your credentials:")
+    print(f"   cp '{os.path.dirname(os.path.dirname(__file__))}/.env.example' '{env_file_path}'")
+    print("🔑 Then edit .env with your EVTrack email and password\n")
+
 # Time validation function
 def validate_time_format(time_string):
     """
@@ -174,7 +182,7 @@ def validate_and_clean_time_fields(data_dict):
     
     return data_dict
 
-@app.get("/docs/swagger", response_class=HTMLResponse)
+@app.get("/docs", response_class=HTMLResponse)
 async def custom_swagger_ui():
     """Custom Swagger UI with Uppy Dashboard file upload functionality that matches the HTML site exactly"""
     return HTMLResponse(content="""
@@ -849,6 +857,11 @@ async def custom_swagger_ui():
 </html>
     """)
 
+
+@app.get("/favicon.ico")
+async def favicon():
+    """Handle favicon requests to prevent 404 errors"""
+    return HTMLResponse(content="", status_code=204)
 
 @app.get("/docs/openapi.yaml", response_class=HTMLResponse)
 async def get_openapi_yaml():
@@ -2571,6 +2584,11 @@ async def health_check():
             "authentication": "/auth/verify"
         }
     }
+
+@app.get("/favicon.ico")
+async def favicon():
+    """Return favicon to prevent 404 errors in browser"""
+    return {"message": "EVTrack API"}
 
 @app.post(
     "/auth/verify",

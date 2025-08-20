@@ -9,7 +9,7 @@ This directory contains Google Apps Script files that provide a complete integra
 - **`evtrack_api.js`** - Main EVTrack API wrapper functions
 - **`sheets_integration.js`** - Google Sheets data processing functions
 - **`drive_integration.js`** - Google Drive file handling functions
-- **`examples.js`** - Comprehensive usage examples and test functions
+- **`main_workflows.js`** - High-level workflow orchestration and menu system
 
 ## 🚀 Quick Setup
 
@@ -25,40 +25,40 @@ Copy and paste each file into your Google Apps Script project:
 2. **`evtrack_api.js`** → Create new script file `evtrack_api.gs`
 3. **`sheets_integration.js`** → Create new script file `sheets_integration.gs`
 4. **`drive_integration.js`** → Create new script file `drive_integration.gs`
-5. **`examples.js`** → Create new script file `examples.gs`
+5. **`main_workflows.js`** → Create new script file `main_workflows.gs`
 
 ### 3. Configure Authentication
 In `authentication.js`, update these variables:
 ```javascript
 const CONFIG = {
-  API_BASE_URL: 'https://2db811a0e2c19fa6c766a0fec3c063a1.serveo.net',  // Your public tunnel URL
-  API_KEY: 'evtrack',  // Your simplified API key
-  GOOGLE_OAUTH_CLIENT_ID: 'your-google-client-id.apps.googleusercontent.com'  // For future OAuth setup
+  API_BASE_URL: 'https://your-aws-lambda-url.amazonaws.com',  // Your deployed AWS Lambda URL
+  API_KEY: 'evtrack',  // Your API key
+  GOOGLE_OAUTH_CLIENT_ID: 'your-google-client-id.apps.googleusercontent.com'  // For OAuth setup
 };
 ```
 
 **Note**: 
-- Use your actual tunnel URL (from serveo.net or ngrok)
-- For production deployment, change to your deployed AWS domain
+- Use your actual AWS Lambda deployment URL
+- The API must be deployed to AWS Lambda for Google Sheets integration to work
 
 ### 4. Test the Setup
-**Before running:** Make sure your API is running locally (`python run.py`)
+**Before running:** Ensure your EVTrack API is deployed to AWS Lambda and accessible
 
 In the Google Apps Script editor:
-1. Select `testBasicFunctions` from the function dropdown
-2. Click the ▶️ **Run** button
-3. Check the **Execution transcript** for results
+1. Select `setupEVTrackIntegration` from the function dropdown
+2. Click the ▶️ **Run** button to configure your API connection
+3. Then select `testAPIConnection` to verify the setup
 
 ```javascript
-testBasicFunctions();  // You can also type and run this directly
+setupEVTrackIntegration();  // Configure API first
+testAPIConnection();       // Then test the connection
 ```
 
 **Expected output:**
 ```
-🧪 Testing basic EVTrack API functions...
+⚙️ Setting up EVTrack integration...
 ✅ API connection successful
-✅ EVTrack login successful
-✅ Basic function tests completed!
+✅ EVTrack API configured successfully!
 ```
 
 ## 🛠 Main Functions
@@ -236,15 +236,9 @@ result.results.forEach(res => {
 ### Common Issues
 
 **1. "API connection failed" or "DNS error"**
-- **Problem**: Google Apps Script can't reach `localhost:3000` (your local server)
-- **Solution 1**: Use ngrok to expose your local API:
-  ```bash
-  brew install ngrok
-  ngrok http 3000
-  # Update API_BASE_URL to use the ngrok URL (e.g., https://abc123.ngrok.io)
-  ```
-- **Solution 2**: Deploy to AWS for permanent access
-- **Check**: Verify your local API is running (`python run.py`)
+- **Problem**: Google Apps Script cannot reach the API endpoint
+- **Solution**: Ensure your API is deployed to AWS Lambda with a public URL
+- **Check**: Verify the API_BASE_URL in authentication.js matches your deployed Lambda URL
 
 **2. "Invalid API key"**
 - Check your `API_BASE_URL` and `API_KEY` in `authentication.js`

@@ -3,11 +3,13 @@
  * Handles authentication with the EVTrack automation API
  */
 
-// Configuration - Ready for local development
+// Configuration - Production deployment ready
 const CONFIG = {
-  API_BASE_URL: 'http://localhost:3000',  // Local development server
-  API_KEY: 'evtrack',  // Simplified API key
-  GOOGLE_OAUTH_CLIENT_ID: 'your-google-client-id.apps.googleusercontent.com'  // For future OAuth setup
+  // Production API URL (update after AWS Lambda deployment)
+  API_BASE_URL: 'https://your-lambda-url.amazonaws.com',  // AWS Lambda API Gateway URL
+  
+  API_KEY: 'evtrack',  // API key for authentication
+  GOOGLE_OAUTH_CLIENT_ID: 'your-google-client-id.apps.googleusercontent.com'  // For enhanced security (future)
 };
 
 /**
