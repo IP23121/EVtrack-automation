@@ -384,13 +384,7 @@ curl -X POST "http://localhost:3000/vehicles/add" \
 ### Production Deployment Integration
 
 **AWS Lambda Deployment:**
-The system can be deployed to AWS Lambda for production use:
-
-- **Serverless Architecture:** Scales automatically based on demand
-- **API Gateway Integration:** Provides HTTPS endpoints with custom domains
-- **Environment Management:** Secure credential storage using AWS Systems Manager
-- **Monitoring:** CloudWatch logs and metrics for performance tracking
-- **Authentication:** AWS Cognito integration for user management
+The system can be deployed to AWS Lambda for production use
 
 **Deployment Process:**
 1. Configure AWS credentials and permissions
